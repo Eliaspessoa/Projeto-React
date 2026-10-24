@@ -196,4 +196,4 @@ Distribuído sob a licença MIT. Você pode usar, copiar e modificar livremente 
 **Elias Dias**
 Desenvolvedor front-end
 
-[GitHub]https://github.com/Eliaspessoa · [LinkedIn](https://www.linkedin.com/in/elias-dias-adsti/) · [Email](eliasdiiaz220@gmail.com)
+https://github.com/Eliaspessoa · [LinkedIn](https://www.linkedin.com/in/elias-dias-adsti/) · [Email](eliasdiiaz220@gmail.com)
