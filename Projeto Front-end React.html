@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elias Dias — Desenvolvedor Front-end</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Style.css">
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ====== EDITE AQUI: seus dados ====== */
+const PERFIL = {
+  nome: "Elias Dias",
+  cargo: "Desenvolvedor front-end",
+  resumo: "Construo interfaces rápidas, acessíveis e fáceis de usar com React e TypeScript. Gosto de transformar ideias confusas em produtos claros.",
+  email: "eliasdiaz220@gmail.com",
+  github: "https://github.com/Eliaspessoa",
+  linkedin: "https://www.linkedin.com/in/elias-dias-adsti/",
+};
+
+const PROJETOS = [
+  { titulo: "Painel Financeiro", desc: "Dashboard com gráficos em tempo real e filtros por período para pequenas empresas.", tags: ["React", "TypeScript", "Recharts"], tipo: "Web app", demo: "#", codigo: "#" },
+  { titulo: "Loja Online", desc: "E-commerce com carrinho, busca e checkout integrado, com carregamento abaixo de 2 segundos.", tags: ["React", "Node", "Stripe"], tipo: "Web app", demo: "#", codigo: "#" },
+  { titulo: "Biblioteca de Componentes", desc: "Design system com 30 componentes acessíveis, documentados e testados.", tags: ["React", "Storybook", "Jest"], tipo: "Biblioteca", demo: "#", codigo: "#" },
+  { titulo: "Agenda de Tarefas", desc: "App de tarefas que funciona offline e sincroniza ao reconectar.", tags: ["React", "PWA", "IndexedDB"], tipo: "Web app", demo: "#", codigo: "#" },
+  { titulo: "Site de Restaurante", desc: "Site institucional responsivo com cardápio digital e reservas por WhatsApp.", tags: ["HTML", "CSS", "JavaScript"], tipo: "Site", demo: "#", codigo: "#" },
+  { titulo: "Hook useFetch", desc: "Pacote open source para buscar dados com cache e cancelamento de requisições.", tags: ["React", "npm", "TypeScript"], tipo: "Biblioteca", demo: "#", codigo: "#" },
+];
+
+const HABILIDADES = ["React", "TypeScript", "JavaScript", "HTML e CSS", "Next.js", "Tailwind", "Acessibilidade", "Testes (Jest)", "Git", "Figma"];
+
+const EXPERIENCIA = [
+  { 
+    cargo: "Desenvolvedor Python / Full-Stack (Projetos e Automação)", 
+    onde: "Projetos Independentes e Portfólio", 
+    quando: "2025 – atual", 
+    texto: "Desenvolvo aplicações web, APIs REST (Flask/FastAPI) e ferramentas de automação e interface gráfica (PySide6, OpenCV), integrando bancos de dados relacionais e garantindo controle de versão com Git/GitHub." 
+  },
+  { 
+    cargo: "Profissional de Logística e Operações", 
+    onde: "Aplicativos de Mobilidade e Entrega (99, iFood, etc.)", 
+    quando: "2024 – 2025", 
+    texto: "Gerenciei prazos, rotas e atendimento ao cliente em tempo real, aprimorando a capacidade de resolução de problemas sob pressão, gestão de tempo e foco na experiência do usuário final." 
+  },
+  { 
+    cargo: "Profissional de Produção e Operações Industriais", 
+    onde: "Setor Têxtil", 
+    quando: "2013 – 2024", 
+    texto: "Atuei por 11 anos com dedicação contínua e forte senso de responsabilidade, desenvolvendo resiliência, trabalho em equipe e adaptação a processos rigorosos de qualidade e eficiência." 
+  }
+];
+
+const CORES = [
+  { nome: "Azul", valor: "#2F5BFF" },
+  { nome: "Verde", valor: "#0E9F6E" },
+  { nome: "Rosa", valor: "#E5367F" },
+  { nome: "Laranja", valor: "#E8590C" },
+];
+/* ==================================== */
+
+function Header({ tema, setTema }) {
+  return (
+    <header className="top">
+      <div className="wrap">
+        <a className="logo" href="#topo">{PERFIL.nome}</a>
+        <nav aria-label="Principal">
+          <a href="#projetos">Projetos</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#experiencia">Experiência</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <button className="icon-btn" onClick={() => setTema(tema === "dark" ? "light" : "dark")}
+          aria-label={tema === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}>
+          {tema === "dark" ? "☀" : "☾"}
+        </button>
+      </div>
+    </header>
+  );
+}
+
+const SLIDES = [
+  { t: "Sites responsivos", svg: (<svg viewBox="0 0 480 340" role="img" aria-label="Ilustração de um site em uma janela de navegador">
+    <rect width="480" height="340" className="f-soft" />
+    <rect x="40" y="34" width="400" height="272" rx="12" className="f-sur s-line" />
+    <rect x="41" y="35" width="398" height="28" rx="11" className="f-line" />
+    <circle cx="58" cy="49" r="5" className="f-acc" /><circle cx="74" cy="49" r="5" className="f-mut" /><circle cx="90" cy="49" r="5" className="f-mut" />
+    <rect x="64" y="88" width="200" height="22" rx="6" className="f-ink" />
+    <rect x="64" y="120" width="150" height="22" rx="6" className="f-acc" />
+    <rect x="64" y="158" width="230" height="8" rx="4" className="f-line" /><rect x="64" y="174" width="190" height="8" rx="4" className="f-line" />
+    <rect x="64" y="198" width="96" height="30" rx="8" className="f-acc" />
+    <rect x="320" y="88" width="96" height="96" rx="10" className="f-soft" /><circle cx="368" cy="136" r="26" className="f-acc" />
+    <rect x="64" y="246" width="110" height="42" rx="8" className="f-soft" /><rect x="185" y="246" width="110" height="42" rx="8" className="f-soft" /><rect x="306" y="246" width="110" height="42" rx="8" className="f-soft" />
+  </svg>) },
+  { t: "Código limpo", svg: (<svg viewBox="0 0 480 340" role="img" aria-label="Ilustração de um editor de código">
+    <rect width="480" height="340" className="f-soft" />
+    <rect x="40" y="34" width="400" height="272" rx="12" className="f-ink" />
+    <circle cx="60" cy="54" r="5" className="f-acc" /><circle cx="76" cy="54" r="5" className="f-mut" /><circle cx="92" cy="54" r="5" className="f-mut" />
+    <rect x="64" y="84" width="70" height="10" rx="5" className="f-acc" /><rect x="144" y="84" width="120" height="10" rx="5" className="f-mut" />
+    <rect x="88" y="110" width="54" height="10" rx="5" className="f-soft" /><rect x="152" y="110" width="150" height="10" rx="5" className="f-acc" />
+    <rect x="88" y="136" width="180" height="10" rx="5" className="f-mut" />
+    <rect x="112" y="162" width="90" height="10" rx="5" className="f-acc" /><rect x="212" y="162" width="110" height="10" rx="5" className="f-soft" />
+    <rect x="112" y="188" width="140" height="10" rx="5" className="f-mut" />
+    <rect x="88" y="214" width="60" height="10" rx="5" className="f-soft" /><rect x="158" y="214" width="100" height="10" rx="5" className="f-acc" />
+    <rect x="64" y="240" width="40" height="10" rx="5" className="f-acc" /><rect x="64" y="266" width="8" height="16" rx="2" className="f-acc" />
+  </svg>) },
+  { t: "Apps para celular", svg: (<svg viewBox="0 0 480 340" role="img" aria-label="Ilustração de um aplicativo no celular">
+    <rect width="480" height="340" className="f-soft" />
+    <rect x="170" y="16" width="140" height="316" rx="26" className="f-sur s-line" />
+    <rect x="214" y="26" width="52" height="8" rx="4" className="f-line" />
+    <rect x="186" y="50" width="108" height="46" rx="10" className="f-acc" />
+    <rect x="186" y="108" width="108" height="40" rx="8" className="f-soft" /><circle cx="204" cy="128" r="9" className="f-acc" /><rect x="220" y="121" width="60" height="8" rx="4" className="f-mut" /><rect x="220" y="134" width="40" height="6" rx="3" className="f-line" />
+    <rect x="186" y="158" width="108" height="40" rx="8" className="f-soft" /><circle cx="204" cy="178" r="9" className="f-acc" /><rect x="220" y="171" width="60" height="8" rx="4" className="f-mut" /><rect x="220" y="184" width="40" height="6" rx="3" className="f-line" />
+    <rect x="186" y="208" width="108" height="40" rx="8" className="f-soft" /><circle cx="204" cy="228" r="9" className="f-acc" /><rect x="220" y="221" width="60" height="8" rx="4" className="f-mut" /><rect x="220" y="234" width="40" height="6" rx="3" className="f-line" />
+    <rect x="186" y="280" width="108" height="32" rx="16" className="f-ink" />
+  </svg>) },
+  { t: "Dashboards e dados", svg: (<svg viewBox="0 0 480 340" role="img" aria-label="Ilustração de um painel com gráficos">
+    <rect width="480" height="340" className="f-soft" />
+    <rect x="40" y="34" width="400" height="272" rx="12" className="f-sur s-line" />
+    <rect x="64" y="56" width="90" height="12" rx="6" className="f-ink" />
+    <rect x="64" y="84" width="100" height="50" rx="8" className="f-soft" /><rect x="176" y="84" width="100" height="50" rx="8" className="f-soft" /><rect x="288" y="84" width="128" height="50" rx="8" className="f-acc" />
+    <rect x="72" y="230" width="28" height="50" rx="4" className="f-line" /><rect x="112" y="200" width="28" height="80" rx="4" className="f-line" /><rect x="152" y="214" width="28" height="66" rx="4" className="f-line" /><rect x="192" y="176" width="28" height="104" rx="4" className="f-acc" /><rect x="232" y="192" width="28" height="88" rx="4" className="f-line" /><rect x="272" y="160" width="28" height="120" rx="4" className="f-acc" />
+    <polyline points="320,250 350,214 380,228 410,170" className="s-acc" />
+  </svg>) },
+];
+
+function Slideshow() {
+  const [i, setI] = useState(0);
+  const [pausa, setPausa] = useState(false);
+  const reduz = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useEffect(() => {
+    if (pausa || reduz) return;
+    const id = setInterval(() => setI(x => (x + 1) % SLIDES.length), 2000);
+    return () => clearInterval(id);
+  }, [pausa, reduz]);
+  return (
+    <div onMouseEnter={() => setPausa(true)} onMouseLeave={() => setPausa(false)} onFocus={() => setPausa(true)} onBlur={() => setPausa(false)}>
+      <div className="show">
+        {SLIDES.map((s, n) => <div key={s.t} className={"slide" + (n === i ? " on" : "")} aria-hidden={n !== i}>{s.svg}</div>)}
+      </div>
+      <div className="cap">
+        <span>{SLIDES[i].t}</span>
+        <div className="dots">
+          {SLIDES.map((s, n) => <button key={s.t} className="dot" aria-label={"Ver: " + s.t} aria-current={n === i} onClick={() => setI(n)} />)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero({ cor, setCor }) {
+  return (
+    <div className="hero" id="topo">
+      <div className="wrap herogrid">
+      <div>
+        <h1>Olá, eu sou {PERFIL.nome.split(" ")[0]}.<br />Crio interfaces para a <span>web</span>.</h1>
+        <p className="lead">{PERFIL.resumo}</p>
+        <div className="row">
+          <a className="btn primary" href="#projetos">Ver projetos</a>
+          <a className="btn ghost" href="#contato">Entrar em contato</a>
+        </div>
+        <div className="swatches" role="group" aria-label="Cor de destaque do site">
+          <span>Escolha a cor do site:</span>
+          {CORES.map(c => (
+            <button key={c.valor} className="sw" style={{ background: c.valor }}
+              aria-label={c.nome} aria-pressed={cor === c.valor} onClick={() => setCor(c.valor)} />
+          ))}
+        </div>
+      </div>
+      <Slideshow />
+      </div>
+    </div>
+  );
+}
+
+function Projetos() {
+  const tipos = ["Todos", ...new Set(PROJETOS.map(p => p.tipo))];
+  const [filtro, setFiltro] = useState("Todos");
+  const lista = PROJETOS.filter(p => filtro === "Todos" || p.tipo === filtro);
+  return (
+    <section id="projetos">
+      <div className="wrap">
+        <h2>Projetos</h2>
+        <p className="sub">Alguns trabalhos que mostram como eu penso e construo.</p>
+        <div className="filters" role="group" aria-label="Filtrar projetos">
+          {tipos.map(t => (
+            <button key={t} className="chip" aria-pressed={filtro === t} onClick={() => setFiltro(t)}>{t}</button>
+          ))}
+        </div>
+        <div className="grid">
+          {lista.map(p => (
+            <article className="card" key={p.titulo}>
+              <div className="thumb" aria-hidden="true">{p.titulo.split(" ").map(w => w[0]).slice(0, 2).join("")}</div>
+              <div className="body">
+                <h3>{p.titulo}</h3>
+                <p>{p.desc}</p>
+                <div className="links">
+                  <a href={p.demo}>Ver demo</a>
+                  <a href={p.codigo}>Ver código</a>
+                </div>
+                <div className="tags">{p.tags.map(t => <span key={t}>{t}</span>)}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Sobre() {
+  return (
+    <section id="sobre">
+      <div className="wrap about">
+        <div>
+          <h2>Sobre mim</h2>
+          <p className="sub" style={{ marginBottom: 16 }}>
+            Sou {PERFIL.cargo.toLowerCase()} com mais de dois anos de experiência. Trabalho do design ao deploy e me importo com desempenho, acessibilidade e código fácil de manter.
+          </p>
+          <p className="sub">Fora do trabalho, contribuo com projetos open source e escrevo sobre o que aprendo.</p>
+        </div>
+        <div>
+          <h3 style={{ fontSize: 22, marginBottom: 14 }}>Tecnologias</h3>
+          <div className="skills">{HABILIDADES.map(h => <span key={h}>{h}</span>)}</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Experiencia() {
+  return (
+    <section id="experiencia">
+      <div className="wrap">
+        <h2>Experiência</h2>
+        <p className="sub">Do estágio ao trabalho atual.</p>
+        <ol className="tl">
+          {EXPERIENCIA.map(e => (
+            <li key={e.cargo}>
+              <h3>{e.cargo}</h3>
+              <div className="when">{e.onde} · {e.quando}</div>
+              <p>{e.texto}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function Contato() {
+  const [nome, setNome] = useState("");
+  const [msg, setMsg] = useState("");
+  const enviar = () => {
+    const assunto = encodeURIComponent("Contato pelo portfólio" + (nome ? " — " + nome : ""));
+    window.location.href = `mailto:${PERFIL.email}?subject=${assunto}&body=${encodeURIComponent(msg)}`;
+  };
+  return (
+    <section id="contato">
+      <div className="wrap">
+        <h2>Vamos conversar</h2>
+        <p className="sub">Tem um projeto ou uma vaga em mente? Escreva abaixo e eu respondo por e-mail.</p>
+        <div className="contact">
+          <label>Seu nome
+            <input value={nome} onChange={e => setNome(e.target.value)} autoComplete="name" />
+          </label>
+          <label>Mensagem
+            <textarea value={msg} onChange={e => setMsg(e.target.value)} />
+          </label>
+          <div className="row">
+            <button className="btn primary" onClick={enviar}>Enviar por e-mail</button>
+            <a className="btn ghost" href={PERFIL.github}>GitHub</a>
+            <a className="btn ghost" href={PERFIL.linkedin}>LinkedIn</a>
+          </div>
+          <p className="note">O botão abre o seu aplicativo de e-mail com a mensagem pronta.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [tema, setTema] = useState(() =>
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const [cor, setCor] = useState(CORES[0].valor);
+
+  useEffect(() => { document.documentElement.setAttribute("data-theme", tema); }, [tema]);
+  useEffect(() => { document.documentElement.style.setProperty("--accent", cor); }, [cor]);
+
+  return (
+    <>
+      <Header tema={tema} setTema={setTema} />
+      <main>
+        <Hero cor={cor} setCor={setCor} />
+        <Projetos />
+        <Sobre />
+        <Experiencia />
+        <Contato />
+      </main>
+      <footer>
+        <div className="wrap">© {new Date().getFullYear()} {PERFIL.nome}. Feito com React.</div>
+      </footer>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
